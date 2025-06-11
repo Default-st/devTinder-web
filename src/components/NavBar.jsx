@@ -1,9 +1,31 @@
 import React from "react";
 import { userStore } from "../utils/appStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 export const NavBar = () => {
-  const { user } = userStore();
+  const { user, removeUser } = userStore();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.status === 200) {
+        console.log(res.data.msg);
+        removeUser();
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="navbar bg-base-300 shadow-sm ">
@@ -43,7 +65,7 @@ export const NavBar = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>
           </div>

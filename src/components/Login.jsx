@@ -7,6 +7,7 @@ import { BASE_URL } from "../utils/constants";
 export const Login = () => {
   const [emailId, setEmailId] = useState("elon@gmail.com");
   const [password, setPassword] = useState("Elon@123");
+  const [error, setError] = useState("");
   const { addUser } = userStore();
   const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ export const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      setError(error?.response?.data?.msg);
     }
   };
   return (
@@ -39,7 +40,6 @@ export const Login = () => {
           className="input"
           placeholder="Email"
         />
-
         <label className="label">Password</label>
         <input
           type="password"
@@ -48,8 +48,8 @@ export const Login = () => {
           className="input"
           placeholder="Password"
         />
-
-        <button className="btn btn-neutral mt-4" onClick={handleLogin}>
+        {error ? <p className="text-red-500 mt-2"> {error}</p> : null}
+        <button className="btn btn-neutral mt-2" onClick={handleLogin}>
           Login
         </button>
       </fieldset>

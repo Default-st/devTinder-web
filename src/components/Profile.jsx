@@ -1,5 +1,14 @@
 import React from "react";
+import { userStore } from "../utils/appStore";
+import { EditProfile } from "./EditProfile";
 
 export const Profile = () => {
-  return <div>Profile</div>;
+  const { user } = userStore();
+  return (
+    user && (
+      <div>
+        <EditProfile data={user} />
+      </div>
+    )
+  );
 };

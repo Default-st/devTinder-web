@@ -55,14 +55,23 @@ export const NavBar = () => {
             >
               <li>
                 <Link to="/profile">
-                  <div className="justify-between">
+                  <div className="justify-between flex items-center gap-2">
                     Profile
-                    <span className="badge">New</span>
+                    <span className="badge bg-primary">New</span>
                   </div>
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/connections">
+                  <div className="justify-between">Connections</div>
+                </Link>
+              </li>
+              <li>
+                <Link to="/requests">
+                  <div className="justify-between flex items-center gap-2">
+                    Requests
+                  </div>
+                </Link>
               </li>
               <li>
                 <button onClick={handleLogout}>Logout</button>

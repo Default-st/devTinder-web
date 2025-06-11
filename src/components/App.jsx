@@ -4,6 +4,8 @@ import { Login } from "./Login.jsx";
 import { Profile } from "./Profile.jsx";
 import { Feed } from "./Feed.jsx";
 import { Logout } from "./Logout.jsx";
+import { Connections } from "./Connections.jsx";
+import { Requests } from "./Requests.jsx";
 
 function App() {
   return (
@@ -14,7 +16,9 @@ function App() {
             <Route path="/" element={<Feed />} />
             <Route path="/login" element={<Login />} />{" "}
             <Route path="/logout" element={<Logout />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />{" "}
+            <Route path="/connections" element={<Connections />} />{" "}
+            <Route path="/requests" element={<Requests />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -30,13 +30,17 @@ export const Feed = () => {
 
   return (
     <div>
-      {feed.length > 0
-        ? feed?.map((item) => (
-            <div className="flex justify-center my-10">
-              <UserCard data={item} key={item._id} />
-            </div>
-          ))
-        : "No new users to show"}
+      {feed.length > 0 ? (
+        feed?.map((item) => (
+          <div className="flex justify-center my-10">
+            <UserCard data={item} key={item._id} />
+          </div>
+        ))
+      ) : (
+        <h1 className="text-bold text-3xl text-center my-10">
+          No new users to show
+        </h1>
+      )}
     </div>
   );
 };

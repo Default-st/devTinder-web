@@ -10,6 +10,10 @@ export const feedStore = create((set) => ({
   feed: [],
   addFeed: (data) => set({ feed: data }),
   removeFeed: () => set({ feed: null }),
+  removeFromFeed: (data) =>
+    set((state) => {
+      return { feed: state.feed.filter((item) => item._id !== data) };
+    }),
 }));
 
 export const connectionsStore = create((set) => ({

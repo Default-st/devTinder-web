@@ -1,7 +1,27 @@
+import axios from "axios";
 import React from "react";
+import { BASE_URL } from "../utils/constants";
+import { feedStore } from "../utils/appStore";
 
 export const UserCard = ({ data }) => {
-  const { firstName, lastName, photoUrl, about, age, gender } = data;
+  const { removeFromFeed } = feedStore();
+  const { _id, firstName, lastName, photoUrl, about, age, gender } = data;
+  const handleSendRequest = async (status, userId) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + `/request/send/${status}/${userId}`,
+        {},
+        { withCredentials: true }
+      );
+
+      if (res.status === 200) {
+        removeFromFeed(userId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div className="card bg-base-300 shadow-sm w-96">
@@ -16,8 +36,18 @@ export const UserCard = ({ data }) => {
           </p>
           <p>{about}</p>
           <div className="card-actions justify-center mt-4">
-            <button className="btn btn-primary">Ignore</button>{" "}
-            <button className="btn btn-secondary">Interested</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleSendRequest("ignored", _id)}
+            >
+              Ignore
+            </button>{" "}
+            <button
+              className="btn btn-secondary"
+              onClick={() => handleSendRequest("interested", _id)}
+            >
+              Interested
+            </button>
           </div>
         </div>
       </div>

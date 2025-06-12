@@ -9,7 +9,7 @@ export const EditProfile = ({ data }) => {
   const [firstName, setFirstName] = useState(data?.firstName);
   const [lastName, setLastName] = useState(data?.lastName);
   const [photoUrl, setPhotoUrl] = useState(data?.photoUrl);
-  const [age, setAge] = useState(data?.age);
+  const [age, setAge] = useState(data?.age || "");
   const [gender, setGender] = useState(data?.gender);
   const [about, setAbout] = useState(data?.about);
   const [error, setError] = useState("");

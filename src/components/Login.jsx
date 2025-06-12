@@ -5,8 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 export const Login = () => {
-  const [emailId, setEmailId] = useState("elon@gmail.com");
-  const [password, setPassword] = useState("Elon@123");
+  const [isLoginForm, setIsLoginForm] = useState(true);
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("Password@123");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
   const { addUser } = userStore();
   const navigate = useNavigate();
@@ -24,6 +27,27 @@ export const Login = () => {
       if (res.status === 200) {
         addUser(res.data.data);
         navigate("/");
+      }
+    } catch (error) {
+      setError(error?.response?.data?.msg);
+    }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        {
+          emailId,
+          password,
+          firstName,
+          lastName,
+        },
+        { withCredentials: true }
+      );
+      if (res.status === 200) {
+        addUser(res.data.data);
+        navigate("/profile");
       }
     } catch (error) {
       setError(error?.response?.data?.msg);
@@ -48,9 +72,41 @@ export const Login = () => {
           className="input"
           placeholder="Password"
         />
+        {!isLoginForm ? (
+          <>
+            {" "}
+            <label className="label">First Name</label>{" "}
+            <input
+              type="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="input"
+              placeholder="FirstName"
+            />
+            <label className="label">Last Name</label>
+            <input
+              type="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="input"
+              placeholder="LastName"
+            />
+          </>
+        ) : null}
         {error ? <p className="text-red-500 mt-2"> {error}</p> : null}
-        <button className="btn btn-neutral mt-2" onClick={handleLogin}>
-          Login
+        <button
+          className="btn btn-primary mt-2"
+          onClick={isLoginForm ? handleLogin : handleSignUp}
+        >
+          {isLoginForm ? "Login" : "SignUp"}
+        </button>{" "}
+        <button
+          className="text-blue-300 mt-2 cursor-pointer hover:underline"
+          onClick={() => setIsLoginForm(!isLoginForm)}
+        >
+          {isLoginForm
+            ? "New User ? Signup Here"
+            : "Existing User ? Login Here"}
         </button>
       </fieldset>
     </div>

@@ -27,6 +27,7 @@ export const Feed = () => {
   useEffect(() => {
     getFeed();
   }, []);
+  if (!feed) return;
 
   return (
     <div>
@@ -37,8 +38,8 @@ export const Feed = () => {
           </div>
         ))
       ) : (
-        <h1 className="text-bold text-3xl text-center my-10">
-          No new users to show
+        <h1 className="text-bold text-2xl text-center my-10">
+          No new users found!
         </h1>
       )}
     </div>
